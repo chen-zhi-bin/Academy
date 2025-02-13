@@ -1,0 +1,33 @@
+# Tomcat端口
+server:
+  port: 8080
+spring:
+  # 数据库连接参数
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/academy?characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+  # jackson序列化设置
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  mvc:
+    # 设置前端传值给后端的时间的统一格式
+    format:
+      date: yyyy-MM-dd HH:mm:ss
+# mybatisPlus设置
+mybatis-plus:
+  configuration:
+    # 日志输出
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 开启驼峰命名规则映射
+    map-underscore-to-camel-case: true
+  # 设置别名
+  type-aliases-package: com.woniu.pojo
+  # 指定映射文件的目录
+  mapper-locations: classpath*:/mapper/**/*.xml
+# 日志输出级别
+logging:
+  level:
+    com.academy: debug

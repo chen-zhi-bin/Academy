@@ -17,5 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITrainerService extends IService<Trainer> {
 
-    Result<PageResult<TrainerListVO>> listTrainer(int currentPage, int pageSize, TrainerSearchDTO trainerDto);
+    PageResult<TrainerListVO> listTrainer(int currentPage, int pageSize, TrainerSearchDTO trainerDto);
 }

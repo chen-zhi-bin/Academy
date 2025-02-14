@@ -8,6 +8,8 @@ import java.util.Date;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -33,6 +35,7 @@ public class Trainer implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @NotEmpty(message = "请输入培训师名称")
     @Schema(description = "培训师姓名")
     private String name;
 
@@ -42,6 +45,7 @@ public class Trainer implements Serializable {
     @Schema(description = "培训师资历,一句话说明培训师")
     private String career;
 
+    @NotNull(message = "请选择培训师头衔")
     @Schema(description = "头衔 1高级培训师 2首席培训师")
     private Integer level;
 

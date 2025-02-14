@@ -34,17 +34,17 @@ public class TrainerServiceImpl extends ServiceImpl<TrainerMapper, Trainer> impl
     private TrainerMapper trainerMapper;
 
     @Override
-    public Result<PageResult<TrainerListVO>> listTrainer(int currentPage, int pageSize, TrainerSearchDTO trainerDto) {
+    public PageResult<TrainerListVO> listTrainer(int currentPage, int pageSize, TrainerSearchDTO trainerDto) {
         QueryWrapper<Trainer> wrapper = new QueryWrapper<Trainer>()
                 .like(trainerDto!=null&&StrUtil.isNotBlank(trainerDto.getName()),"name",trainerDto.getName())
                 .eq(trainerDto!=null&&trainerDto.getLevel()!=null,"level",trainerDto.getLevel())
                 .ge(trainerDto!=null&&trainerDto.getCreateTimeStart()!=null,"create_time",trainerDto.getCreateTimeStart())
-                .le(trainerDto!=null&&trainerDto.getCreateTimeEnd()!=null,"update_time",trainerDto.getCreateTimeEnd());
+                .le(trainerDto!=null&&trainerDto.getCreateTimeEnd()!=null,"create_time",trainerDto.getCreateTimeEnd());
         Page<Trainer> trainerPage = trainerMapper.selectPage(new Page<>(currentPage, pageSize), wrapper);
         PageResult<TrainerListVO> result = new PageResult<>();
         result.setTotal(trainerPage.getTotal());
         List<TrainerListVO> trainerListVOS = BeanUtil.copyToList(trainerPage.getRecords(), TrainerListVO.class);
         result.setData(trainerListVOS);
-        return Result.ok(result);
+        return result;
     }
 }

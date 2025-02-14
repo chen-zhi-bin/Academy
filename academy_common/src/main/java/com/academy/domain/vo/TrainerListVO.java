@@ -17,7 +17,7 @@ public class TrainerListVO {
     private Long id;
     @Schema(description ="名称")
     private String name;
-    @Schema(description ="头衔：1初级 2中级 3高级 4首席")
+    @Schema(description ="头衔 1高级培训师 2首席培训师")
     private Integer level;
     @Schema(description ="头像")
     private String avatar;

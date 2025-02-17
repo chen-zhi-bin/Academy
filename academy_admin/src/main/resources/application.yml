@@ -2,6 +2,10 @@
 server:
   port: 8080
 spring:
+  data:
+    redis:
+      host: 192.168.64.132
+      port: 6379
   # 数据库连接参数
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

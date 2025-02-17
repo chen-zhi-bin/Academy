@@ -24,6 +24,7 @@
     <mysql.version>5.1.48</mysql.version>
     <mybatis.version>3.5.10.1</mybatis.version>
     <knife4j.version>4.4.0</knife4j.version>
+    <jjwt.version>0.11.5</jjwt.version>
   </properties>
 
   <!--定义父工程-->
@@ -50,6 +51,22 @@
         <groupId>com.github.xiaoymin</groupId>
         <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         <version>${knife4j.version}</version>
+      </dependency>
+      <!--jjwt-->
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>${jjwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>${jjwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId>
+        <version>${jjwt.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

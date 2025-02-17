@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.academy.mapper.MenuMapper">
+
+    <sql id="baseMenu">
+        id, menu_name, parent_id, order_num, path, component, query, is_frame, menu_type, visible, status, perms,
+        icon, create_time, update_time
+    </sql>
+    <select id="listTreeMenusAll" resultType="com.academy.domain.po.Menu">
+        select <include refid="baseMenu"></include> from wnxt_menu
+        where menu_type in ('M', 'C') and status = 0
+        order by parent_id, order_num
+    </select>
+    <select id="listTreeMenusByUsername" resultType="com.academy.domain.po.Menu">
+        select distinct a.id, a.parent_id, a.menu_name, a.path, a.component, a.`query`, a.visible, a.status, ifnull(a.perms,'') as perms, a.is_frame, a.menu_type, a.icon, a.order_num, a.create_time
+        from wnxt_menu a
+                 left join wnxt_role_menu b on a.id = b.menu_id
+                 left join wnxt_user_role c on b.role_id = c.role_id
+                 left join wnxt_role d on c.role_id = d.id
+                 left join wnxt_user e on c.user_id = e.id
+        where e.username = #{username} and a.menu_type in ('M', 'C') and a.status = 0
+        order by a.parent_id, a.order_num
+    </select>
+
+
+</mapper>

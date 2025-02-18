@@ -17,8 +17,8 @@ public class TrainerSearchDTO extends BaseDTO {
     private Integer level;
     @Schema(description ="入驻的起始时间")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date createTimeStart;
+    private Date beginTime;
     @Schema(description ="入驻的结束时间")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date createTimeEnd;
+    private Date endTime;
 }

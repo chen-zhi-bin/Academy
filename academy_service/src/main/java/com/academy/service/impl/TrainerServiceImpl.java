@@ -38,8 +38,8 @@ public class TrainerServiceImpl extends ServiceImpl<TrainerMapper, Trainer> impl
         QueryWrapper<Trainer> wrapper = new QueryWrapper<Trainer>()
                 .like(trainerDto!=null&&StrUtil.isNotBlank(trainerDto.getName()),"name",trainerDto.getName())
                 .eq(trainerDto!=null&&trainerDto.getLevel()!=null,"level",trainerDto.getLevel())
-                .ge(trainerDto!=null&&trainerDto.getCreateTimeStart()!=null,"create_time",trainerDto.getCreateTimeStart())
-                .le(trainerDto!=null&&trainerDto.getCreateTimeEnd()!=null,"create_time",trainerDto.getCreateTimeEnd());
+                .ge(trainerDto!=null&&trainerDto.getBeginTime()!=null,"create_time",trainerDto.getBeginTime())
+                .le(trainerDto!=null&&trainerDto.getEndTime()!=null,"create_time",trainerDto.getEndTime());
         Page<Trainer> trainerPage = trainerMapper.selectPage(new Page<>(currentPage, pageSize), wrapper);
         PageResult<TrainerListVO> result = new PageResult<>();
         result.setTotal(trainerPage.getTotal());

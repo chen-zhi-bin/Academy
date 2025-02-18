@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private static final String WHITE_PATH = "/system/login";
+    private static final String WHITE_PATH = "/system/login,/system/logout";
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 1. 放行白名单
@@ -30,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
         if(StringUtils.isEmpty(token) || !token.startsWith("Bearer")){
             log.debug("非法的token，值为：{}", token);
-            printResult(response, Result.error("请求中未包含token"));
+            printResult(response, Result.error(40001,"请求中未包含token"));
             return false;
         }
         // 3. 使用JWT解析token，如果不正确，则表示非法的请求
@@ -49,7 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         } catch (Exception exception) {
             exception.printStackTrace();
             // 抛出异常，说明token解析失败
-            printResult(response, Result.error("非法的token"));
+            printResult(response, Result.error(40001,"非法的token"));
             return false;
         }
     }

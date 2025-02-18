@@ -115,4 +115,10 @@ public class LoginController {
         return Result.ok(routerVos);
     }
 
+    @Operation(summary = "登出")
+    @PostMapping("/logout")
+    public Result logout(){
+        return Result.ok("登录退出");
+    }
+
 }

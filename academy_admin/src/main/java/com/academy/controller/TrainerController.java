@@ -33,12 +33,11 @@ public class TrainerController {
     private ITrainerService trainerService;
 
     @Operation(summary = "搜索+分页")
-    @PostMapping("/list/{currentPage}/{pageSize}")
+    @PostMapping("/list/search")
     public Result<PageResult<TrainerListVO>> listTrainer(
-            @PathVariable("currentPage")int currentPage,
-            @PathVariable("pageSize")int pageSize,
             @RequestBody TrainerSearchDTO trainerDto){
-        PageResult<TrainerListVO> result = trainerService.listTrainer(currentPage, pageSize, trainerDto);
+        System.out.println(trainerDto);
+        PageResult<TrainerListVO> result = trainerService.listTrainer(trainerDto.getCurrentPage(), trainerDto.getPageSize(), trainerDto);
         return Result.ok(result);
     }
 

@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.xiaoymin.knife4j.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,9 @@ public class TrainerServiceImpl extends ServiceImpl<TrainerMapper, Trainer> impl
     @Autowired
     private TrainerMapper trainerMapper;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public PageResult<TrainerListVO> listTrainer(int currentPage, int pageSize, TrainerSearchDTO trainerDto) {
         QueryWrapper<Trainer> wrapper = new QueryWrapper<Trainer>()
@@ -46,5 +50,20 @@ public class TrainerServiceImpl extends ServiceImpl<TrainerMapper, Trainer> impl
         List<TrainerListVO> trainerListVOS = BeanUtil.copyToList(trainerPage.getRecords(), TrainerListVO.class);
         result.setData(trainerListVOS);
         return result;
+    }
+
+    @Override
+    public List<Trainer> listAll() {
+        // 1. 从redis中数据，如果redis中存在数据，直接返回就可以，不需要查询数据库
+        List trainerList = redisTemplate.opsForList().range("trainerListAll", 0, -1);
+        if(trainerList != null && trainerList.size() > 0){
+            return trainerList;
+        }
+        // 2. 如果redis中没有数据，查询数据
+        List<Trainer> trainerList1 = trainerMapper.selectList(null);
+        // 3. 将数据库中的查询出来的数据存储到redis中
+        redisTemplate.opsForList().leftPushAll("trainerListAll", trainerList1);
+        // 4. 再返回数据
+        return trainerList1;
     }
 }

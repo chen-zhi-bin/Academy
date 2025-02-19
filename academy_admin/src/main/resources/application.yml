@@ -35,3 +35,9 @@ mybatis-plus:
 logging:
   level:
     com.academy: debug
+aliyun:
+  oss:
+    endpoint: ${aliyun.oss.endpoint}
+    access-key-id: ${aliyun.oss.access-key-id}
+    access-key-secret: ${aliyun.oss.access-key-secret}
+    bucket-name: ${aliyun.oss.bucket-name}  #桶名

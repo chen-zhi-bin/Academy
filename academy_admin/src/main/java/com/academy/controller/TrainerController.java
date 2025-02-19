@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -67,6 +68,12 @@ public class TrainerController {
     public Result updateById(@RequestBody Trainer trainer){
         boolean flag = trainerService.updateById(trainer);
         return Result.commonByFlag(flag);
+    }
+
+    @GetMapping("/list/all")
+    public Result<List<Trainer>> listAll(){
+        List<Trainer> trainerList = trainerService.listAll();
+        return Result.ok(trainerList);
     }
 
 }

@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private static final String WHITE_PATH = "/system/login,/system/logout";
+    private static final String WHITE_PATH = "/system/login,/system/logout,/trainer/list/all";
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 1. 放行白名单

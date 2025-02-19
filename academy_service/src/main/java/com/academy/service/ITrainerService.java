@@ -7,6 +7,8 @@ import com.academy.entity.PageResult;
 import com.academy.entity.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 培训师表 服务类
@@ -18,4 +20,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ITrainerService extends IService<Trainer> {
 
     PageResult<TrainerListVO> listTrainer(int currentPage, int pageSize, TrainerSearchDTO trainerDto);
+
+    List<Trainer> listAll();
+
 }

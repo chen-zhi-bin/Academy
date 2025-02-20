@@ -1,6 +1,7 @@
 package com.academy.controller;
 
 
+import com.academy.constant.Constant;
 import com.academy.domain.dto.TrainerSearchDTO;
 import com.academy.domain.vo.TrainerListVO;
 import com.academy.entity.PageResult;
@@ -33,6 +34,9 @@ public class TrainerController {
     @Autowired
     private ITrainerService trainerService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Operation(summary = "搜索+分页")
     @PostMapping("/list/search")
     public Result<PageResult<TrainerListVO>> listTrainer(
@@ -46,6 +50,11 @@ public class TrainerController {
     @PostMapping("/save")
     public Result saveTrainer(@Valid @RequestBody Trainer trainer){
         boolean flag = trainerService.save(trainer);
+        if (flag){
+            // 将图片存到redis的集合中redis_db_upload_image
+            String filename = trainer.getAvatar().substring(trainer.getAvatar().lastIndexOf("/") + 1, trainer.getAvatar().indexOf("?"));
+            redisTemplate.opsForSet().add(Constant.REDIS_DB_UPLOAD_IMAGE, filename);
+        }
         return Result.commonByFlag(flag);
     }
 
@@ -67,6 +76,11 @@ public class TrainerController {
     @PutMapping
     public Result updateById(@RequestBody Trainer trainer){
         boolean flag = trainerService.updateById(trainer);
+        if (flag){
+            // 将图片存到redis的集合中redis_db_upload_image
+            String filename = trainer.getAvatar().substring(trainer.getAvatar().lastIndexOf("/") + 1, trainer.getAvatar().indexOf("?"));
+            redisTemplate.opsForSet().add(Constant.REDIS_DB_UPLOAD_IMAGE, filename);
+        }
         return Result.commonByFlag(flag);
     }
 

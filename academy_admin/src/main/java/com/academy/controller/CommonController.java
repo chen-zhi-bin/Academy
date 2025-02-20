@@ -1,9 +1,11 @@
 package com.academy.controller;
 
+import com.academy.constant.Constant;
 import com.academy.entity.Result;
 import com.academy.utils.OssUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,9 @@ public class CommonController {
     @Autowired
     private OssUtils ossUtils;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @PostMapping("/upload")
     public Result upload(MultipartFile file) throws IOException {
         // 1. 需要修改文件的名称（保证唯一性）
@@ -34,6 +39,8 @@ public class CommonController {
         // 4. 调用oss的工具类上传图片,接受图片的地址
         String fileUrl = ossUtils.uploadFile(filename, file.getInputStream());
         log.info("图片上传到阿里云oss的访问地址是：" + fileUrl);
+        // 图片以上上传到阿里云，将图片保存到redis集合中redis_all_upload_image
+        redisTemplate.opsForSet().add(Constant.REDIS_ALL_UPLOAD_IMAGE, filename);
         // 5. 将图片地址发送给前端
         return Result.ok(20000, "图片上传成功", fileUrl);
     }

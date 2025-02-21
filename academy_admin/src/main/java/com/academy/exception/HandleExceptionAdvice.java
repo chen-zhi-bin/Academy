@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class HandleExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public Result handlerException(Exception exception){
+        exception.printStackTrace();
+        log.debug("系统抛出了异常，异常为：{}", exception.getMessage());
         return Result.error(exception.getMessage());
     }
 

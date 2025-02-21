@@ -2,6 +2,7 @@ package com.academy.service;
 
 import com.academy.domain.dto.TrainerSearchDTO;
 import com.academy.domain.po.Trainer;
+import com.academy.domain.vo.TrainerExportVo;
 import com.academy.domain.vo.TrainerListVO;
 import com.academy.entity.PageResult;
 import com.academy.entity.Result;
@@ -23,4 +24,5 @@ public interface ITrainerService extends IService<Trainer> {
 
     List<Trainer> listAll();
 
+    List<TrainerExportVo> listAllTrainerExportVo();
 }

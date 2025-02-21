@@ -3,6 +3,7 @@ package com.academy.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.academy.domain.dto.TrainerSearchDTO;
 import com.academy.domain.po.Trainer;
+import com.academy.domain.vo.TrainerExportVo;
 import com.academy.domain.vo.TrainerListVO;
 import com.academy.entity.PageResult;
 import com.academy.entity.Result;
@@ -65,5 +66,11 @@ public class TrainerServiceImpl extends ServiceImpl<TrainerMapper, Trainer> impl
         redisTemplate.opsForList().leftPushAll("trainerListAll", trainerList1);
         // 4. 再返回数据
         return trainerList1;
+    }
+
+    @Override
+    public List<TrainerExportVo> listAllTrainerExportVo() {
+        List<TrainerExportVo> data = trainerMapper.listAllTrainerExportVo();
+        return data;
     }
 }

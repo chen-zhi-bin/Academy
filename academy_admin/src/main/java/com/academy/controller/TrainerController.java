@@ -3,19 +3,30 @@ package com.academy.controller;
 
 import com.academy.constant.Constant;
 import com.academy.domain.dto.TrainerSearchDTO;
+import com.academy.domain.vo.TrainerExportVo;
 import com.academy.domain.vo.TrainerListVO;
 import com.academy.entity.PageResult;
 import com.academy.entity.Result;
 import com.academy.domain.po.Trainer;
 import com.academy.service.ITrainerService;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.builder.ExcelWriterBuilder;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -88,6 +99,26 @@ public class TrainerController {
     public Result<List<Trainer>> listAll(){
         List<Trainer> trainerList = trainerService.listAll();
         return Result.ok(trainerList);
+    }
+
+    @PostMapping("/download")
+    public void downloadTrainer(HttpServletResponse response) throws IOException {
+        // 获取所有培训师信息
+        List<TrainerExportVo> trainerList = trainerService.listAllTrainerExportVo();
+
+        // 设置响应头
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("trainer_list", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-Disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+
+        // 使用 EasyExcel 写入数据
+        try (ExcelWriter builder = EasyExcel.write(response.getOutputStream(), TrainerExportVo.class).build()) {
+            WriteSheet sheet = EasyExcel.writerSheet("培训师列表").build();
+            builder.write(trainerList, sheet);
+            builder.finish();
+            response.getOutputStream().flush();
+        }
     }
 
 }

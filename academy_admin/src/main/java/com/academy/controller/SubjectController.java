@@ -37,6 +37,12 @@ public class SubjectController {
         return Result.ok(subjectList);
     }
 
+    /**
+     * 导出数据
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @Schema(title = "导入数据")
     @PostMapping("/import")
     public Result importData(MultipartFile file) throws IOException {

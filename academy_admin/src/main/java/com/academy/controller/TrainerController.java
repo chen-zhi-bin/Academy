@@ -121,4 +121,10 @@ public class TrainerController {
         }
     }
 
+    @GetMapping("/search/key-world")
+    public Result<List<Trainer>> searchTrainerByKeyWorld(@RequestParam("key-world")String keyWorld){
+        List<Trainer> data = trainerService.searchTrainerByKeyWorld(keyWorld);
+        return Result.ok(data);
+    }
+
 }

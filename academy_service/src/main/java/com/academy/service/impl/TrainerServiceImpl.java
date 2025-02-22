@@ -9,6 +9,7 @@ import com.academy.entity.PageResult;
 import com.academy.entity.Result;
 import com.academy.mapper.TrainerMapper;
 import com.academy.service.ITrainerService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -72,5 +73,13 @@ public class TrainerServiceImpl extends ServiceImpl<TrainerMapper, Trainer> impl
     public List<TrainerExportVo> listAllTrainerExportVo() {
         List<TrainerExportVo> data = trainerMapper.listAllTrainerExportVo();
         return data;
+    }
+
+    @Override
+    public List<Trainer> searchTrainerByKeyWorld(String keyWorld) {
+        LambdaQueryWrapper<Trainer> wrapper = new LambdaQueryWrapper<Trainer>()
+                .like(keyWorld != null && keyWorld.length() > 0, Trainer::getName, keyWorld);
+        List<Trainer> list = trainerMapper.selectList(wrapper);
+        return list;
     }
 }

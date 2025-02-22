@@ -25,4 +25,6 @@ public interface ITrainerService extends IService<Trainer> {
     List<Trainer> listAll();
 
     List<TrainerExportVo> listAllTrainerExportVo();
+
+    List<Trainer> searchTrainerByKeyWorld(String keyWorld);
 }

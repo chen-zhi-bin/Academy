@@ -2,6 +2,7 @@ package com.academy.service;
 
 import com.academy.domain.dto.CourseAddDTO;
 import com.academy.domain.po.Course;
+import com.academy.domain.vo.CoursePublishVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -17,4 +18,8 @@ public interface ICourseService extends IService<Course> {
     Long saveCourse(CourseAddDTO courseAddDTO);
 
     CourseAddDTO getCourseById(Long id);
+
+    CoursePublishVO getCoursePublishById(String courseId);
+
+    int postCoursePublishById(String courseId);
 }

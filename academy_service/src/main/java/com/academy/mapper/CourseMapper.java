@@ -1,6 +1,7 @@
 package com.academy.mapper;
 
 import com.academy.domain.po.Course;
+import com.academy.domain.vo.CoursePublishVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CourseMapper extends BaseMapper<Course> {
 
+    CoursePublishVO getCoursePublishById(String courseId);
+
+    int postCoursePublishById(String courseId);
 }

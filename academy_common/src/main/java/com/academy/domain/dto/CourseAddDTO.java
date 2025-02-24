@@ -10,6 +10,9 @@ import java.math.BigDecimal;
  */
 @Data
 public class CourseAddDTO {
+
+    @Schema(title = "课程ID")
+    private Long id;
     @Schema(title = "课程标题")
     private String title;
     @Schema(title = "一级分类ID")

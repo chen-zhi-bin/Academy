@@ -20,5 +20,24 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+    <update id="postCoursePublishById" parameterType="java.lang.String">
+        update wnxt_course set status = 'Normal' where id = #{courseId}
+    </update>
+    <select id="getCoursePublishById" resultType="com.academy.domain.vo.CoursePublishVO"
+            parameterType="java.lang.String">
+        select c.id, c.cover,c.title, c.lesson_num, c.price,
+               s.title subjectTwoName,
+               t.name trainerName,
+               ss.title subjectOneName
+        from wnxt_course c, wnxt_subject s, wnxt_trainer t, wnxt_subject ss
+        where
+            c.subject_id = s.id
+          and
+            c.trainer_id = t.id
+          and
+            c.subject_parent_id = ss.id
+          and
+            c.id = #{courseId}
+    </select>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.academy.service.impl;
 import com.academy.domain.dto.CourseAddDTO;
 import com.academy.domain.po.Course;
 import com.academy.domain.po.CourseDescription;
+import com.academy.domain.vo.CoursePublishVO;
 import com.academy.mapper.CourseDescriptionMapper;
 import com.academy.mapper.CourseMapper;
 import com.academy.service.ICourseService;
@@ -36,12 +37,20 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         Course course = new Course();
         // 2. 保存course对象
         BeanUtils.copyProperties(courseAddDTO, course);
-        courseMapper.insert(course);
+        if (course.getId()!=null){
+            courseMapper.updateById(course);
+        }else {
+            courseMapper.insert(course);
+        }
         // 3. 创建CourseDescription 对象
         CourseDescription courseDescription = new CourseDescription();
         courseDescription.setId(course.getId());
         courseDescription.setDescription(courseAddDTO.getDescription());
-        courseDescriptionMapper.insert(courseDescription);
+        if (course.getId()!=null){
+            courseDescriptionMapper.updateById(courseDescription);
+        }else {
+            courseDescriptionMapper.insert(courseDescription);
+        }
 
         // 将图片地址保存到redis小集合
         String filename = course.getCover().substring(course.getCover().indexOf(".com") + 5, course.getCover().indexOf("?"));
@@ -61,5 +70,15 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         BeanUtils.copyProperties(course, courseAddDTO);
         courseAddDTO.setDescription(courseDescription.getDescription());
         return courseAddDTO;
+    }
+
+    @Override
+    public CoursePublishVO getCoursePublishById(String courseId) {
+        return courseMapper.getCoursePublishById(courseId);
+    }
+
+    @Override
+    public int postCoursePublishById(String courseId) {
+        return courseMapper.postCoursePublishById(courseId);
     }
 }

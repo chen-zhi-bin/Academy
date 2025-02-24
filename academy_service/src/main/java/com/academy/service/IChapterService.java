@@ -1,7 +1,10 @@
 package com.academy.service;
 
 import com.academy.domain.po.Chapter;
+import com.academy.domain.vo.ChapterVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IChapterService extends IService<Chapter> {
 
+    List<ChapterVO> listByCourseIdRelationVideos(Long courseId);
+
+    void removeByIdRelation(Long id);
 }

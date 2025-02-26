@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ISubjectService extends IService<Subject> {
     void importData(List<SubjectImportDTO> importDTOList);
+
+    List<Subject> listIndexTwo();
 }

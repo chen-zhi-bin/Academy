@@ -4,6 +4,7 @@ import com.academy.domain.dto.CourseAddDTO;
 import com.academy.domain.po.Course;
 import com.academy.domain.po.CourseDescription;
 import com.academy.domain.vo.CoursePublishVO;
+import com.academy.domain.vo.CourseVO;
 import com.academy.mapper.CourseDescriptionMapper;
 import com.academy.mapper.CourseMapper;
 import com.academy.service.ICourseService;
@@ -12,6 +13,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -80,5 +83,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public int postCoursePublishById(String courseId) {
         return courseMapper.postCoursePublishById(courseId);
+    }
+
+    @Override
+    public List<CourseVO> getHotCourse() {
+        List<CourseVO> data = courseMapper.getHotCourse();
+        return data;
     }
 }

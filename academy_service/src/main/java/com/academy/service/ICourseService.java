@@ -3,7 +3,10 @@ package com.academy.service;
 import com.academy.domain.dto.CourseAddDTO;
 import com.academy.domain.po.Course;
 import com.academy.domain.vo.CoursePublishVO;
+import com.academy.domain.vo.CourseVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,4 +25,6 @@ public interface ICourseService extends IService<Course> {
     CoursePublishVO getCoursePublishById(String courseId);
 
     int postCoursePublishById(String courseId);
+
+    List<CourseVO> getHotCourse();
 }

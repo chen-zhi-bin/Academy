@@ -39,5 +39,25 @@
           and
             c.id = #{courseId}
     </select>
+    <select id="getHotCourse" resultType="com.academy.domain.vo.CourseVO">
+        select c.id,c.trainer_id,c.subject_id,c.subject_parent_id, c.cover,c.title, c.lesson_num, c.price, c.buy_count, c.view_count, c.create_time,  c.update_time,
+               s.title subjectTwoName,
+               t.name trainerName,
+               ss.title subjectOneName
+        from wnxt_course c, wnxt_subject s, wnxt_trainer t, wnxt_subject ss
+        where
+            c.subject_id = s.id
+          and
+            c.trainer_id = t.id
+          and
+            c.subject_parent_id = ss.id
+          and
+            c.status = 'Normal'
+          and
+            c.is_deleted = 0
+        ORDER BY
+            c.view_count DESC
+            LIMIT 10;
+    </select>
 
 </mapper>
